@@ -91,24 +91,4 @@ Vagrant.configure(2) do |config|
       vb.memory = "1024"
     end
   end
-  config.vm.define "nomadclient1" do |nomadclient1|
-    nomadclient1.vm.box = "bento/ubuntu-16.04"
-    nomadclient1.vm.hostname = "nomadclient1.vagrant.test"
-    nomadclient1.vm.provision "shell", inline: $script, privileged: false
-    nomadclient1.vm.provision "docker"
-    # Increase memory for Virtualbox
-    nomadclient1.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-    end
-  end
-  config.vm.define "nomadclient2" do |nomadclient2|
-    nomadclient2.vm.box = "bento/ubuntu-16.04"
-    nomadclient2.vm.hostname = "nomadclient2.vagrant.test"
-    nomadclient2.vm.provision "shell", inline: $script, privileged: false
-    nomadclient2.vm.provision "docker"
-    # Increase memory for Virtualbox
-    nomadclient2.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-    end
-  end
 end
