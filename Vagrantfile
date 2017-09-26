@@ -80,6 +80,7 @@ nomad -autocomplete-install
 SCRIPT
 
 Vagrant.configure(2) do |config|
+  config.landrush.enabled = true
   config.vm.define "nomad1" do |nomad1|
     nomad1.vm.box = "bento/ubuntu-16.04"
     nomad1.vm.hostname = "nomad1.vagrant.test"
