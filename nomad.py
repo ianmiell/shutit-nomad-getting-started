@@ -24,7 +24,8 @@ nomad_client1_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null 
 nomad_client2_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad_client2.vagrant.test | awk '{print $2}'""").strip()
 
 nomad_server.send('curl https://raw.githubusercontent.com/hashicorp/nomad/master/demo/vagrant/server.hcl > server.hcl')
-nomad_server.send('sudo nomad agent -config server.hcl',background=True)
+nomad_server.send('sudo nomad agent nomad node-status -address http://' + nomad_server_ip + ':4646 -config server.hcl',background=True)
+nomad_server.pause_point('')
 
 nomad_client1.send('curl https://raw.githubusercontent.com/hashicorp/nomad/master/demo/vagrant/client1.hcl > client1.hcl')
 nomad_client1.send("""sed -i 's/127.0.0.1/""" + nomad_server_ip + """/' client1.hcl""")
