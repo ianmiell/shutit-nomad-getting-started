@@ -2,13 +2,14 @@ import shutit
 
 # Assumes vagrant, and vagrant landrush are installed
 
-root = shutit.create_session('bash',loglevel='debug')
-nomad_server = shutit.create_session('bash',loglevel='debug')
-nomad_client1 = shutit.create_session('bash',loglevel='debug')
-nomad_client2 = shutit.create_session('bash',loglevel='debug')
+root = shutit.create_session('bash',loglevel='info',echo=True)
+nomad_server = shutit.create_session('bash',loglevel='info')
+nomad_client1 = shutit.create_session('bash',loglevel='info')
+nomad_client2 = shutit.create_session('bash',loglevel='info')
 
-nomad_server.send('vagrant destroy -f')
-nomad_server.send('vagrant up')
+pw = root.get_input('Password?',ispass=True)
+root.send('vagrant destroy -f')
+root.multisend('vagrant up',{'assword':pw})
 
 nomad_server.login('vagrant ssh nomad1')
 nomad_client1.login('vagrant ssh nomad2')
@@ -26,10 +27,10 @@ nomad_server.send('curl https://raw.githubusercontent.com/hashicorp/nomad/master
 nomad_server.send('sudo nomad agent -config server.hcl',background=True)
 
 nomad_client1.send('curl https://raw.githubusercontent.com/hashicorp/nomad/master/demo/vagrant/client1.hcl > client1.hcl')
-nomad_client1.send("""sed -i 's/127.0.0.1/""" + nomad1_ip + """/ client1.hcl""")
+nomad_client1.send("""sed -i 's/127.0.0.1/""" + nomad_server_ip + """/' client1.hcl""")
 nomad_client1.send('sudo nomad agent -config client1.hcl',background=True)
 
 nomad_client2.send('curl https://raw.githubusercontent.com/hashicorp/nomad/master/demo/vagrant/client1.hc2 > client2.hcl')
-nomad_client2.send("""sed -i 's/127.0.0.1/""" + nomad1_ip + """/ client2.hcl""")
+nomad_client2.send("""sed -i 's/127.0.0.1/""" + nomad_server_ip + """/' client2.hcl""")
 nomad_client2.send('sudo nomad agent -config client2.hcl',background=True)
 
