@@ -81,33 +81,33 @@ SCRIPT
 
 Vagrant.configure(2) do |config|
   config.landrush.enabled = true
-  config.vm.define "nomad1" do |nomad1|
-    nomad1.vm.box = "bento/ubuntu-16.04"
-    nomad1.vm.hostname = "nomad1.vagrant.test"
-    nomad1.vm.provision "shell", inline: $script, privileged: false
-    nomad1.vm.provision "docker"
+  config.vm.define "nomad_server" do |nomad_server|
+    nomad_server.vm.box = "bento/ubuntu-16.04"
+    nomad_server.vm.hostname = "nomad_server.vagrant.test"
+    nomad_server.vm.provision "shell", inline: $script, privileged: false
+    nomad_server.vm.provision "docker"
     # Increase memory for Virtualbox
-    nomad1.vm.provider "virtualbox" do |vb|
+    nomad_server.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
   end
-  config.vm.define "nomad2" do |nomad2|
-    nomad2.vm.box = "bento/ubuntu-16.04"
-    nomad2.vm.hostname = "nomad2.vagrant.test"
-    nomad2.vm.provision "shell", inline: $script, privileged: false
-    nomad2.vm.provision "docker"
+  config.vm.define "nomad_client1" do |nomad_client1|
+    nomad_client1.vm.box = "bento/ubuntu-16.04"
+    nomad_client1.vm.hostname = "nomad_client1.vagrant.test"
+    nomad_client1.vm.provision "shell", inline: $script, privileged: false
+    nomad_client1.vm.provision "docker"
     # Increase memory for Virtualbox
-    nomad2.vm.provider "virtualbox" do |vb|
+    nomad_client1.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
   end
-  config.vm.define "nomad3" do |nomad3|
-    nomad3.vm.box = "bento/ubuntu-16.04"
-    nomad3.vm.hostname = "nomad3.vagrant.test"
-    nomad3.vm.provision "shell", inline: $script, privileged: false
-    nomad3.vm.provision "docker"
+  config.vm.define "nomad_client2" do |nomad_client2|
+    nomad_client2.vm.box = "bento/ubuntu-16.04"
+    nomad_client2.vm.hostname = "nomad_client2.vagrant.test"
+    nomad_client2.vm.provision "shell", inline: $script, privileged: false
+    nomad_client2.vm.provision "docker"
     # Increase memory for Virtualbox
-    nomad3.vm.provider "virtualbox" do |vb|
+    nomad_client2.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
   end

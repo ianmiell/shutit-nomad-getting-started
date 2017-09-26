@@ -12,16 +12,16 @@ pw = root.get_input('Password?',ispass=True)
 root.send('vagrant destroy -f')
 root.multisend('vagrant up',{'assword':pw})
 
-nomad_server.login('vagrant ssh nomad1')
-nomad_client1.login('vagrant ssh nomad2')
-nomad_client2.login('vagrant ssh nomad3')
+nomad_server.login('vagrant ssh nomad_server')
+nomad_client1.login('vagrant ssh nomad_client1')
+nomad_client2.login('vagrant ssh nomad_client2')
 
 if root.send_and_get_output('vagrant plugin list | grep landrush') == '':
 	shutit.multisend('vagrant plugin install landrush',{'assword':pw})
 
-nomad_server_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad1.vagrant.test | awk '{print $2}'""").strip()
-nomad_client1_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad2.vagrant.test | awk '{print $2}'""").strip()
-nomad_client2_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad3.vagrant.test | awk '{print $2}'""").strip()
+nomad_server_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad_server.vagrant.test | awk '{print $2}'""").strip()
+nomad_client1_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad_client1.vagrant.test | awk '{print $2}'""").strip()
+nomad_client2_ip = root.send_and_get_output("""vagrant landrush ls 2> /dev/null | grep -w ^nomad_client2.vagrant.test | awk '{print $2}'""").strip()
 
 nomad_server.send('curl https://raw.githubusercontent.com/hashicorp/nomad/master/demo/vagrant/server.hcl > server.hcl')
 nomad_server.send('sudo nomad agent -config server.hcl',background=True)
