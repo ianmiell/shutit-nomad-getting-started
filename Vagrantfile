@@ -81,33 +81,33 @@ SCRIPT
 
 Vagrant.configure(2) do |config|
   config.landrush.enabled = true
-  config.vm.define "nomad_server" do |nomad_server|
-    nomad_server.vm.box = "bento/ubuntu-16.04"
-    nomad_server.vm.hostname = "nomad_server.vagrant.test"
-    nomad_server.vm.provision "shell", inline: $script, privileged: false
-    nomad_server.vm.provision "docker"
+  config.vm.define "nomadserver" do |nomadserver|
+    nomadserver.vm.box = "bento/ubuntu-16.04"
+    nomadserver.vm.hostname = "nomadserver.vagrant.test"
+    nomadserver.vm.provision "shell", inline: $script, privileged: false
+    nomadserver.vm.provision "docker"
     # Increase memory for Virtualbox
-    nomad_server.vm.provider "virtualbox" do |vb|
+    nomadserver.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
   end
-  config.vm.define "nomad_client1" do |nomad_client1|
-    nomad_client1.vm.box = "bento/ubuntu-16.04"
-    nomad_client1.vm.hostname = "nomad_client1.vagrant.test"
-    nomad_client1.vm.provision "shell", inline: $script, privileged: false
-    nomad_client1.vm.provision "docker"
+  config.vm.define "nomadclient1" do |nomadclient1|
+    nomadclient1.vm.box = "bento/ubuntu-16.04"
+    nomadclient1.vm.hostname = "nomadclient1.vagrant.test"
+    nomadclient1.vm.provision "shell", inline: $script, privileged: false
+    nomadclient1.vm.provision "docker"
     # Increase memory for Virtualbox
-    nomad_client1.vm.provider "virtualbox" do |vb|
+    nomadclient1.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
   end
-  config.vm.define "nomad_client2" do |nomad_client2|
-    nomad_client2.vm.box = "bento/ubuntu-16.04"
-    nomad_client2.vm.hostname = "nomad_client2.vagrant.test"
-    nomad_client2.vm.provision "shell", inline: $script, privileged: false
-    nomad_client2.vm.provision "docker"
+  config.vm.define "nomadclient2" do |nomadclient2|
+    nomadclient2.vm.box = "bento/ubuntu-16.04"
+    nomadclient2.vm.hostname = "nomadclient2.vagrant.test"
+    nomadclient2.vm.provision "shell", inline: $script, privileged: false
+    nomadclient2.vm.provision "docker"
     # Increase memory for Virtualbox
-    nomad_client2.vm.provider "virtualbox" do |vb|
+    nomadclient2.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
   end
